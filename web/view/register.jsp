@@ -792,13 +792,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <h1>Creative SignUp Form</h1>
     <div class="main-agileinfo">
         <div class="agileits-top">
-            <form action="#" method="post">
+            <form action="./register" method="post">
 <%--                style="margin-bottom: 150px"--%>
-                <input   class="text" type="text" name="Fullname" placeholder="Fullname" required="">
-                <input class="text" type="text" name="Username" placeholder="Username" required="">
+                <p>${NOTIFICATION}</p>
+                <input   class="text" type="text" name="fullname" placeholder="Fullname" required="">
+                <input class="text" type="text" name="username" placeholder="Username" required="">
                 <input class="text email" type="email" name="email" placeholder="Email" required="">
-                <input class="text" type="password" name="password" placeholder="Password" required="">
-                <input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">
+                <input class="text" type="password" name="password1" placeholder="Password" required="">
+                <input class="text w3lpass" type="password" name="passwordFinal" placeholder="Confirm Password" required="">
                 <div class="wthree-text">
                     <label class="anim">
                         <input type="checkbox" class="checkbox" required="">
