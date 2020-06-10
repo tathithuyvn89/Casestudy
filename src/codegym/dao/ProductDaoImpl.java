@@ -19,6 +19,7 @@ public class ProductDaoImpl implements IProductDao {
     private static final String SELECT_PRODUCTS_BY_ID="select name,price,description,img,maker from products"+
             " where id=?";
     private  static final String DELETE_PRODUCT_BY_ID="delete from products where id=?";
+    private static final String FIND_PRODUCT_BY_NAME ="SELECT * FROM products where name like ?;";
 
 private List<Product> products = new ArrayList<>();
     @Override
@@ -122,19 +123,26 @@ private List<Product> products = new ArrayList<>();
 
 
     @Override
-    public Product searchByName(String productName) {
-        int index=-1;
-        for (int i=0; i<products.size();i++){
-            if (products.get(i).getName().equalsIgnoreCase(productName)){
-                index=i;
-            };
-
+    public List<Product> searchByName(String productName) {
+        products.clear();
+        Connection connection= JDBCUtils.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_PRODUCT_BY_NAME);
+            preparedStatement.setString(1,"%"+productName+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double price= resultSet.getDouble("price");
+                String description= resultSet.getString("description");
+                String img = resultSet.getString("img");
+                String maker = resultSet.getString("maker");
+                products.add(new Product(id,name,price,description,img,maker));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        if (index!=-1){
-            return products.get(index);
-        } else {
-            return null;
-        }
+        return products;
     }
 }
 

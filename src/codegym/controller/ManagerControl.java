@@ -120,15 +120,50 @@ public class ManagerControl extends HttpServlet {
             case "delete":
                 showDeleteForm(request,response);
                 break;
-//            case "view":
-//                viewProductForm(request, response);
-//                break;
-//            case "search":
-//                resultSearchForm(request, response);
-//                break;
+            case "view":
+                viewProductForm(request, response);
+                break;
+            case "search":
+                resultSearchForm(request, response);
+                break;
             default:
                 listProduct(request, response);
                 break;
+        }
+
+    }
+
+    private void resultSearchForm(HttpServletRequest request, HttpServletResponse response) {
+        String productName = request.getParameter("searchname");
+        List<Product> productList= productDao.searchByName(productName);
+        request.setAttribute("products",productList);
+        RequestDispatcher dispatcher= request.getRequestDispatcher("manager/searchproduct.jsp");
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void viewProductForm(HttpServletRequest request, HttpServletResponse response) {
+        int id= Integer.parseInt(request.getParameter("id"));
+        Product product=productDao.selectById(id);
+        RequestDispatcher dispatcher;
+        if(product==null){
+            dispatcher=request.getRequestDispatcher("404-error.jsp");
+        }else {
+            dispatcher=request.getRequestDispatcher("manager/productview.jsp");
+            request.setAttribute("product", product);
+        }
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -14,14 +14,18 @@
 <body>
 <h1>Product list</h1>
 <div>
-    <form method="post" action="./search">
-        <input type="text" name="search" placeholder=" Enter a name of product">
-        <a href="./myproduct?action=search&productname=${requestScope["search"]}"><input type="submit" value="search"></a>
+<%--    action="./product_manage?action=search--%>
+    <form method="get"  >
+        <input type="text" name="searchname" placeholder=" Enter a name of product">
+        <a href="./product_manage?action=search">Search</a>
+
     </form>
 </div>
 <a href="./product_manage?action=create">Create new product</a>
 <table border="3">
     <tr>
+        <td>#</td>
+        <td>ID</td>
         <td>Name</td>
         <td>Price</td>
         <td>Description</td>
@@ -31,7 +35,9 @@
     </tr>
     <c:forEach  items='${requestScope["products"]}' var="product">
         <tr>
-            <td><a href="./product_manage?action=view&id=${product.getId()}">${product.getName()}</a></td>
+            <td></td>
+            <td><a href="./product_manage?action=view&id=${product.getId()}">${product.getId()}</a></td>
+            <td>${product.getName()}</td>
             <td>${product.getPrice()}</td>
             <td>${product.getDescription()}</td>
             <td>${product.getMaker()}</td>

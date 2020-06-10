@@ -10,5 +10,5 @@ public interface IProductDao {
     Product selectById(int id);
     boolean removeProduct(int id);
     boolean updateProduct(Product product);
-    Product searchByName(String productName);
+    List<Product> searchByName(String productName);
 }
