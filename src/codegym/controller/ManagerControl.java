@@ -30,6 +30,9 @@ public class ManagerControl extends HttpServlet {
             case "delete":
                 deleteProduct(request,response);
                 break;
+            case "search":
+                resultSearchForm(request, response);
+                break;
             default:
                 break;
         }
@@ -123,9 +126,7 @@ public class ManagerControl extends HttpServlet {
             case "view":
                 viewProductForm(request, response);
                 break;
-            case "search":
-                resultSearchForm(request, response);
-                break;
+
             default:
                 listProduct(request, response);
                 break;
@@ -134,10 +135,15 @@ public class ManagerControl extends HttpServlet {
     }
 
     private void resultSearchForm(HttpServletRequest request, HttpServletResponse response) {
-        String productName = request.getParameter("searchname");
-        List<Product> productList= productDao.searchByName(productName);
-        request.setAttribute("products",productList);
-        RequestDispatcher dispatcher= request.getRequestDispatcher("manager/searchproduct.jsp");
+        String adress= request.getParameter("address");
+        String name = request.getParameter("searchname");
+        List<Product> productList= productDao.searchByName(name);
+        if(productList.size()==0){
+            request.setAttribute("NOTFOUNDRESULTSEARCH","Không có kết quả tìm kiếm");
+        } else {
+            request.setAttribute("products",productList);
+        }
+        RequestDispatcher dispatcher= request.getRequestDispatcher(adress);
         try {
             dispatcher.forward(request,response);
         } catch (ServletException e) {

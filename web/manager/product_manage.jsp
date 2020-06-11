@@ -12,13 +12,14 @@
     <title>Productmanagement</title>
 </head>
 <body>
+<h1 style="right: 0px"><a href="./logout">Đăng xuất</a></h1>
 <h1>Product list</h1>
 <div>
 <%--    action="./product_manage?action=search--%>
-    <form method="get"  >
+    <form method="post" action="./product_manage?action=search" >
         <input type="text" name="searchname" placeholder=" Enter a name of product">
-        <a href="./product_manage?action=search">Search</a>
-
+        <input type="hidden" name="address" value="manager/product_manage.jsp">
+        <button type="submit">Search</button>
     </form>
 </div>
 <a href="./product_manage?action=create">Create new product</a>

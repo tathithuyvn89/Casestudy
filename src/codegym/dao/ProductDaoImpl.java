@@ -20,6 +20,7 @@ public class ProductDaoImpl implements IProductDao {
             " where id=?";
     private  static final String DELETE_PRODUCT_BY_ID="delete from products where id=?";
     private static final String FIND_PRODUCT_BY_NAME ="SELECT * FROM products where name like ?;";
+    private  static final String GROUP_PRODUCTS_BY_MAKER = "select * from products where maker= ?;";
 
 private List<Product> products = new ArrayList<>();
     @Override
@@ -144,5 +145,29 @@ private List<Product> products = new ArrayList<>();
         }
         return products;
     }
+
+    @Override
+    public List<Product> groupByMaker(String maker) {
+        products.clear();
+        Connection connection = JDBCUtils.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(GROUP_PRODUCTS_BY_MAKER);
+            preparedStatement.setString(1,maker);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double price= resultSet.getDouble("price");
+                String description= resultSet.getString("description");
+                String img = resultSet.getString("img");
+                String maker1 = resultSet.getString("maker");
+                products.add(new Product(id,name,price,description,img,maker));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return products;
+    }
+
 }
 

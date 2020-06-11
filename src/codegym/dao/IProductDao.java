@@ -11,4 +11,5 @@ public interface IProductDao {
     boolean removeProduct(int id);
     boolean updateProduct(Product product);
     List<Product> searchByName(String productName);
+    List<Product> groupByMaker(String maker);
 }

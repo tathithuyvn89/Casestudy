@@ -22,6 +22,16 @@ create table products(
 );
 drop table products;
 
+create table oders (
+                       orderId  int auto_increment primary key,
+                       user_id int ,
+                       product_id int,
+                       status int not null,
+                       date DATE not null,
+                       foreign key (user_id) references users(id),
+                       foreign key (product_id) references products(id)
+);
+
 
 
 

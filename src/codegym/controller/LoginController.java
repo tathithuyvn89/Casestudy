@@ -30,8 +30,8 @@ public class LoginController extends HttpServlet {
             HttpSession session= request.getSession();
             session.setAttribute("IS_lOGGINED",true);
             session.setAttribute("ROLE",loginDao.doPermission(username));
+            session.setAttribute("USERNAME",loginDao.findNameByUsername(username));
             response.sendRedirect("./home?action=list");
-
 
         }else {
             RequestDispatcher requestDispatcher= request.getRequestDispatcher("view/login.jsp");

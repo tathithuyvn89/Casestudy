@@ -15,6 +15,7 @@ public class LoginDao {
 
     private static final String SELECT_FROM_USERS ="SELECT password from users where username=? and password=?;";
     private static  final String SELECT_ALL_USERS= "SELECT * from users where username =?";
+    private static final  String SELECT_NAME_BY_USERNAME= "SELECT fullname from users where username=?;";
     private List<User>users = new ArrayList<>();
     public boolean validate(Login login) {
         boolean status= false;
@@ -44,5 +45,21 @@ public class LoginDao {
             throwables.printStackTrace();
         }
         return role;
+    }
+    public String findNameByUsername(String username){
+        String result=null;
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_NAME_BY_USERNAME);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+             result =   resultSet.getString("fullname");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
 }

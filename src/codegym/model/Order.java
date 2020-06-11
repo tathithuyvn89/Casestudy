@@ -8,7 +8,7 @@ public class Order {
     private  User user;
     private List<Item> items = new ArrayList<>();
     private int status;
-
+    private String date;
     public Order() {
     }
 
