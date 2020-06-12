@@ -1,11 +1,20 @@
 package codegym.model;
 
 public class User {
+    private int id;
     private String fullname;
     private String username;
     private String password;
     private String email;
     private int role;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public User() {
     }

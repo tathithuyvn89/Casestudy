@@ -26,12 +26,43 @@ create table oders (
                        orderId  int auto_increment primary key,
                        user_id int ,
                        product_id int,
+                       quantity int,
+                       price double,
                        status int not null,
-                       date DATE not null,
+                       date varchar(50) not null,
                        foreign key (user_id) references users(id),
                        foreign key (product_id) references products(id)
 );
+create
+    definer = root@localhost procedure addOrder(IN userId int)
+begin
+    insert into orders(orderUserId, orderDate) values (userId,curdate());
+end;
 
+create table orderDetails(
+                             user_id int,
+                             product_id int,
+                             quantity int,
+                             price double,
+                             primary key (user_id,product_id),
+                             foreign key (user_id) references users(id),
+                             foreign key (product_id) references products(id)
+);
+create
+    definer = root@localhost procedure addOrder(IN userId int)
+begin
+    insert into orders(orderUserId, orderDate) values (userId,curdate());
+end;
 
-
+DELIMITER //
+CREATE PROCEDURE insertOrderDetail(
+    user_id int,
+    product_id int,
+    quantity int,
+    price double
+)
+begin
+    insert into orderdetails(user_id, product_id, quantity, price) values (user_id,product_id,quantity,price);
+end //
+delimiter ;
 
